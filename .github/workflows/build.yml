@@ -1,23 +1,48 @@
-name: Build project with Nix
+name: Build project with Nix and deploy to GH Pages
 
 on:
   push:
   pull_request:
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
       - uses: actions/checkout@v4
+
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: DeterminateSystems/flake-checker-action@main
+
       - name: Run `nix build`
         run: nix build -L .
+
       - uses: actions/upload-artifact@v4
         with:
           name: result
           path: result/*
+
+  deploy:
+    if: github.event_name == 'push'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "result/"
+      - uses: actions/deploy-pages@v4
+        id: deployment
