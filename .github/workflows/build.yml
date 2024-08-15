@@ -43,6 +43,6 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: "result/"
+          path: "result"
       - uses: actions/deploy-pages@v4
         id: deployment
