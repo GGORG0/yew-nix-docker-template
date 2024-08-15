@@ -43,7 +43,7 @@
 
           inherit (pkgs) lib;
 
-          rustToolchainFor = p: p.rust-bin.nightly.latest.default.override {
+          rustToolchainFor = p: p.rust-bin.stable.latest.default.override {
             # Set the build targets supported by the toolchain,
             # wasm32-unknown-unknown is required for trunk
             targets = [ "wasm32-unknown-unknown" ];
