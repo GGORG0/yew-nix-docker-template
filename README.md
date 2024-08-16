@@ -33,6 +33,14 @@ This project contains a `Dockerfile`, and a `compose.yaml` file.
 The `Dockerfile` builds the project (with layer caching support) and copies the output files to a basic Nginx container.
 The `compose.yaml` file builds the image and exposes the website at `0.0.0.0:8080`.
 
+## GitHub Actions and Pages
+
+This project contains a GitHub Actions workflow.
+It builds the project using Nix and publishes the output files as a build artifact.
+It also deploys them to GitHub Pages.
+
+**NOTE:** If you are deploying this under a subpath (e.g. `https://user.github.io/repo/` instead of `https://user.github.io/`), you will need to set the `build.public_url` value in `Trunk.toml` to your path (e.g. `/repo/`) or the entire URL (e.g. `https://user.github.io/repo/`). If you are using a custom domain or deploying it on the root of your github.io domain, you don't need to do anything.
+
 ## License
 
 You can base your project on this template. It is licensed under the MIT (see `LICENSE`).
